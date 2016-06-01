@@ -50,4 +50,12 @@ class Users extends Base_Controller {
             return $this->groups_model->get_groups_of_user($this->id);
         });
     }
+
+    public function create_one(){
+        $this->google_token = $this->input->post("google_token");
+
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->users_model->create(array("google_token" => $this->google_token));
+        });   
+    }
 }

@@ -53,6 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route["users"]["post"] = "Users/create_one";
 $route["users"]["get"] = "Users/get";
 $route['users/(:num)'] = "Users/get_one/$1";
 $route['users/(:num)/groups'] = "Users/get_groups/$1";
