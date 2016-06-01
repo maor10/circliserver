@@ -10,10 +10,6 @@ class Requests_model extends Base_Model {
         $this->unique_id_field = "id";
     }
 
-    public function get_requests_for_user($user_id){
-        SELECT * FROM `requests` JOIN groups on groups.id = requests.group_id JOIN groups_users ON groups_users.group_id = groups.id WHERE groups_users.user_id = 1
-        $this->select("*")->from($this->table_name)->join("groups", "ON groups.")
-    }
 
     public function get_requests_of_user($user_id){
         $this->db->select("*")->from("requests");
