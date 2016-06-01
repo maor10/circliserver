@@ -67,7 +67,7 @@ class Users extends Base_Controller {
 
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->requests_model->get_requests_of_user($this->id);
-        }
+        });
     }
 
 

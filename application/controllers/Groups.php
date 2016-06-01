@@ -64,7 +64,7 @@ class Groups extends Base_Controller {
         $this->createArr = array(
             "name" => $this->input->post("name"),
             "managing_user_id" => $this->input->post("managing_user_id")
-            )
+            );
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->groups_model->create($this->createArr);
         });   
