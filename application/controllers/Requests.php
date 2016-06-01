@@ -51,12 +51,7 @@ class Requests extends Base_Controller {
         });
     }
 
-    public function get_one($id){
-        $this->id = $id;
-        parent::asynchronousResponseWithOperation($this, function($instance) {
-            return $this->requests_model->get_one($this->id);
-        });   
-    }
+    
 
     public function update($id){
         $this->solver_id = $this->input->put("solver_id");
