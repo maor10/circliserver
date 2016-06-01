@@ -50,4 +50,18 @@ class Requests extends Base_Controller {
             return $this->groups_model->get_groups_of_user($this->id);
         });
     }
+
+    public function get_requests_of_group($group_id){
+        $this->group_id = $group_id;
+         parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->get_requests_of_group($this->group_id);
+        });
+    }
+
+    public function get_one($id){
+        $this->id = $id;
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->get_one($this->id);
+        });   
+    }
 }

@@ -58,3 +58,7 @@ $route['users/(:num)'] = "Users/get_one/$1";
 $route['users/(:num)/groups'] = "Users/get_groups/$1";
 
 $route['groups/(:num)/user'] = "Groups/get_users/$1";
+$route['groups/(:num)/requests'] = "Requests/get_requests_of_group/$1";
+
+
+$route['requests/(:num)'] = "Requests/get_one/$1";

@@ -15,6 +15,4 @@ class Groups_model extends Base_Model {
         $this->db->where("users.id", $user_id);
         return $this->db->get()->result();
     }
-
-    
 }

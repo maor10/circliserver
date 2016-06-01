@@ -11,8 +11,24 @@ class Requests_model extends Base_Model {
     }
 
     public function get_requests_for_user($user_id){
+        SELECT * FROM `requests` JOIN groups on groups.id = requests.group_id JOIN groups_users ON groups_users.group_id = groups.id WHERE groups_users.user_id = 1
         $this->select("*")->from($this->table_name)->join("groups", "ON groups.")
     }
+
+    public function get_requests_of_group($group_id){
+        $this->db->select("*")->from("requests");
+        $this->db->where("group_id", $group_id);
+
+        return $this->db->get()->result();
+    }
+
+    public function get_one($id){
+        $this->db->select("*")->from("requests");
+        $this->db->where("id", $group_id);
+
+        return $this->db->get()->result()[0];   
+    }
+
     
     /*
     public function get_running_campaign($institute_id){
