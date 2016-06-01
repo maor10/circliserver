@@ -54,7 +54,7 @@ class Users extends Base_Controller {
     public function create(){
         $this->createArr = array(
             "google_token" => $this->input->post("google_token")
-            )
+            );
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->groups_model->create($this->createArr);
         });   

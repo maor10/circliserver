@@ -73,7 +73,7 @@ class Requests extends Base_Controller {
             "payment" => $this->input->post("payment"),
             "user_id" => $this->input->post("user_id"),
             "group_id" => $this->input->post("group_id")
-            )
+            );
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->requests_model->create($this->createArr);
         });   
