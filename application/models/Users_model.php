@@ -16,6 +16,12 @@ class Users_model extends Base_Model {
         $this->db->where("groups.id", $group_id);
         return $this->db->get()->result();
     }
+
+    public function get_request_creator($request_id){
+        $this->db->select("users.*")->from($this->table_name)->join("requests", "ON requests.user_id = users.id")->where("requests.id", $request_id);
+
+        return $this->db->get()->result();
+    }
     /*
     public function get_running_campaign($institute_id){
     

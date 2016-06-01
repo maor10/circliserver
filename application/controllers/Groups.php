@@ -50,4 +50,24 @@ class Groups extends Base_Controller {
             return $this->groups_model->get_users_of_group($this->id);
         });
     }
+
+    public function get_requests_of_group($id){
+        $this->load->model("requests_model");
+
+        $this->group_id = $id;
+         parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->get_requests_of_group($this->group_id);
+        });
+    }
+
+    public function create(){
+        $this->createArr = array(
+            "name" => $this->input->post("name"),
+            "managing_user_id" => $this->input->post("managing_user_id")
+            )
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->groups_model->create($this->createArr);
+        });   
+
+    }
 }

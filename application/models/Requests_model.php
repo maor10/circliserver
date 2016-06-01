@@ -15,6 +15,11 @@ class Requests_model extends Base_Model {
         $this->select("*")->from($this->table_name)->join("groups", "ON groups.")
     }
 
+    public function get_requests_of_user($user_id){
+        $this->db->select("*")->from("requests");
+        $this->db->where("user_id", $user_id);
+    }
+
     public function get_requests_of_group($group_id){
         $this->db->select("*")->from("requests");
         $this->db->where("group_id", $group_id);

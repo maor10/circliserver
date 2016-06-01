@@ -51,17 +51,43 @@ class Requests extends Base_Controller {
         });
     }
 
-    public function get_requests_of_group($group_id){
-        $this->group_id = $group_id;
-         parent::asynchronousResponseWithOperation($this, function($instance) {
-            return $this->requests_model->get_requests_of_group($this->group_id);
-        });
-    }
-
     public function get_one($id){
         $this->id = $id;
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->requests_model->get_one($this->id);
         });   
     }
+
+    public function update($id){
+        $this->solver_id = $this->input->put("solver_id");
+
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->update($id, array("solver_id" => $this->solver_id));
+        });   
+
+    }
+
+    public function create(){
+        $this->createArr = array(
+            "item_name" => $this->input->post("item_name"),
+            "payment" => $this->input->post("payment"),
+            "user_id" => $this->input->post("user_id"),
+            "group_id" => $this->input->post("group_id")
+            )
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->create($this->createArr);
+        });   
+
+    }
+    public function get_creator($id){
+        $this->load->model("users_model");
+
+        $this->request_id = $id;
+
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->users_model->get_request_creator($this->request_id);
+        });           
+
+    }
 }
+

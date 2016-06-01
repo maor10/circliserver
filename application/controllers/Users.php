@@ -51,11 +51,24 @@ class Users extends Base_Controller {
         });
     }
 
-    public function create_one(){
-        $this->google_token = $this->input->post("google_token");
-
+    public function create(){
+        $this->createArr = array(
+            "google_token" => $this->input->post("google_token")
+            )
         parent::asynchronousResponseWithOperation($this, function($instance) {
-            return $this->users_model->create(array("google_token" => $this->google_token));
+            return $this->groups_model->create($this->createArr);
         });   
     }
+
+    public function get_requests($id){
+        $this->load->model("requests_model");
+
+        $this->id = $id;
+
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->requests_model->get_requests_of_user($this->id);
+        }
+    }
+
+
 }

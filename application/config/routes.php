@@ -53,13 +53,18 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route["users"]["post"] = "Users/create_one";
+$route["users"]["post"] = "Users/create";
 $route["users"]["get"] = "Users/get";
-$route['users/(:num)'] = "Users/get_one/$1";
-$route['users/(:num)/groups'] = "Users/get_groups/$1";
+$route['users/(:num)']["get"] = "Users/get_one/$1";
+$route['users/(:num)/groups']["get"] = "Users/get_groups/$1";
+$route['users/(:num)/requests']["get"] = "Users/get_requests/$1";
 
-$route['groups/(:num)/user'] = "Groups/get_users/$1";
-$route['groups/(:num)/requests'] = "Requests/get_requests_of_group/$1";
+$route['groups/(:num)/users']["get"] = "Groups/get_users/$1";
+$route['groups/create']["post"] = "Groups/create";
+$route['groups/(:num)/requests']["get"] = "Groups/get_requests_of_group/$1";
 
 
-$route['requests/(:num)'] = "Requests/get_one/$1";
+$route['requests/(:num)']["get"] = "Requests/get_one/$1";
+$route['requests/(:num)']["put"] = "Requests/update/$1";
+$route['requests']["post"] = "Requests/create";
+$route['requests/(:num)/creator']["get"] = "Requests/get_creator";
