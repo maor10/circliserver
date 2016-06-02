@@ -27,7 +27,16 @@ class Push extends Base_Controller {
 
     public function create($user_id){
 
-    	$message = "test";
+    	$this->load->model("users_model");
+
+    	$res = $this->users_model->get(array("id" => $user_id));
+
+    	if (is_null($res))
+    		return "Error";
+
+    	$deviceToken = $res[0>device_token;
+    	
+		$message = "test";
 
 		$ctx = stream_context_create();
 		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
