@@ -29,12 +29,12 @@ class Push extends Base_Controller {
 
     	$this->load->model("users_model");
 
-    	$res = $this->users_model->get($user_id)->result();
+    	$res = $this->users_model->get(array("id" => $user_id));
 
     	if (is_null($res))
     		return "Error";
 
-    	$device = $res[0]["device_token"];
+    	$device = $res[0]->device_token;
     	
 		$payload['aps'] = array('alert' => 'This is the alert text', 'badge' => 1, 'sound' => 'default');
 		$payload['server'] = array('serverId' => $serverId, 'name' => $name);
