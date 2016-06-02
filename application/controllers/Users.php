@@ -60,6 +60,15 @@ class Users extends Base_Controller {
         });   
     }
 
+    public function update($id){
+        $this->updateArr = array(
+            "device_token" => $this->input->put("device_token")
+            );
+        parent::asynchronousResponseWithOperation($this, function($instance) {
+            return $this->users_model->update($id, $this->updateArr);
+        });   
+    }
+
     public function get_requests($id){
         $this->load->model("requests_model");
 

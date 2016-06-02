@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route["users"]["post"] = "Users/create";
 $route["users"]["get"] = "Users/get";
 $route['users/(:num)']["get"] = "Users/get_one/$1";
+$route['users/(:num)']["put"] = "Users/update/$1";
 $route['users/(:num)/groups']["get"] = "Users/get_groups/$1";
 $route['users/(:num)/requests']["get"] = "Users/get_requests/$1";
 
