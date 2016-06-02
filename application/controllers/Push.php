@@ -27,7 +27,7 @@ class Push extends Base_Controller {
 
     public function create($user_id){
 
-    	$msg = "test";
+    	$message = "test";
 
 		$ctx = stream_context_create();
 		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
