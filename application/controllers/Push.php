@@ -29,7 +29,7 @@ class Push extends Base_Controller {
 
     	$this->load->model("users_model");
 
-    	$res = $this->users_model->get_one($user_id)->result();
+    	$res = $this->users_model->get($user_id)->result();
 
     	if (is_null($res))
     		return "Error";
