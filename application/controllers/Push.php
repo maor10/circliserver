@@ -27,31 +27,44 @@ class Push extends Base_Controller {
 
     public function create($user_id){
 
-    	$this->load->model("users_model");
+		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
+		stream_context_set_option($ctx, 'ssl', 'passphrase', "circlicircli");
 
-    	$res = $this->users_model->get(array("id" => $user_id));
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', 
+		    $err, 
+		    $errstr, 
+		    60, 
+		    STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, 
+		    $ctx);
 
-    	if (is_null($res))
-    		return "Error";
+		//if (!$fp)
+		//exit("Failed to connect amarnew: $err $errstr" . PHP_EOL);
 
-    	$device = $res[0]->device_token;
-    	
-		$payload['aps'] = array('alert' => 'This is the alert text', 'badge' => 1, 'sound' => 'default');
-		$payload['server'] = array('serverId' => $serverId, 'name' => $name);
-		$output = json_encode($payload);
+		//echo 'Connected to APNS' . PHP_EOL;
 
-		$apnsCert = 'ck.pem';
+		// Create the payload body
+		$body['aps'] = array(
+		    'badge' => +1,
+		    'alert' => $message,
+		    'sound' => 'default'
+		);
 
-		$streamContext = stream_context_create();
-		stream_context_set_option($streamContext, 'ssl', 'local_cert', $apnsCert);
+		$payload = json_encode($body);
 
-		$apns = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $error, $errorString, 2, STREAM_CLIENT_CONNECT, $streamContext);
+		// Build the binary notification
+		$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
 
-		$apnsMessage = chr(0) . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $device)) . chr(0) . chr(strlen($payload)) . $payload;
-		fwrite($apns, $apnsMessage);
+		// Send it to the server
+		$result = fwrite($fp, $msg, strlen($msg));
 
-		//socket_close($apns); seems to be wrong here ...
-		fclose($apns);
+		if (!$result)
+		    echo 'Message not delivered' . PHP_EOL;
+		else
+		    echo 'Message successfully delivered amar'.$message. PHP_EOL;
+
+		// Close the connection to the server
+		fclose($fp);
 
     }
 }
