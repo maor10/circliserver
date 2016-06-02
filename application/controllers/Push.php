@@ -39,7 +39,7 @@ class Push extends Base_Controller {
 		$message = "test";
 
 		$ctx = stream_context_create();
-		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
+		stream_context_set_option($ctx, 'ssl', 'local_cert', 'bamba.pem');
 		stream_context_set_option($ctx, 'ssl', 'passphrase', "circlicircli");
 
 		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', 
