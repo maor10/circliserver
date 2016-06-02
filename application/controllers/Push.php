@@ -54,3 +54,4 @@ class Push extends Base_Controller {
 		fclose($apns);
 
     }
+}
