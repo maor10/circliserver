@@ -34,7 +34,7 @@ class Push extends Base_Controller {
     	if (is_null($res))
     		return "Error";
 
-    	$deviceToken = $res[0>device_token;
+    	$deviceToken = $res[0]->device_token;
     	
 		$message = "test";
 
