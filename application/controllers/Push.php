@@ -34,24 +34,48 @@ class Push extends Base_Controller {
     	if (is_null($res))
     		return "Error";
 
-    	$device = $res[0]->device_token;
+    	$deviceToken = $res[0]->device_token;
     	
-		$payload['aps'] = array('alert' => 'This is the alert text', 'badge' => 1, 'sound' => 'default');
-		$payload['server'] = array('serverId' => $serverId, 'name' => $name);
-		$output = json_encode($payload);
+		$message = "test";
 
-		$apnsCert = 'ck.pem';
+		$ctx = stream_context_create();
+		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
+		stream_context_set_option($ctx, 'ssl', 'passphrase', "circlicircli");
 
-		$streamContext = stream_context_create();
-		stream_context_set_option($streamContext, 'ssl', 'local_cert', $apnsCert);
+		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', 
+		    $err, 
+		    $errstr, 
+		    60, 
+		    STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, 
+		    $ctx);
 
-		$apns = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $error, $errorString, 2, STREAM_CLIENT_CONNECT, $streamContext);
+		//if (!$fp)
+		//exit("Failed to connect amarnew: $err $errstr" . PHP_EOL);
 
-		$apnsMessage = chr(0) . chr(0) . chr(32) . pack('H*', str_replace(' ', '', $device)) . chr(0) . chr(strlen($payload)) . $payload;
-		fwrite($apns, $apnsMessage);
+		//echo 'Connected to APNS' . PHP_EOL;
 
-		//socket_close($apns); seems to be wrong here ...
-		fclose($apns);
+		// Create the payload body
+		$body['aps'] = array(
+		    'badge' => +1,
+		    'alert' => $message,
+		    'sound' => 'default'
+		);
+
+		$payload = json_encode($body);
+
+		// Build the binary notification
+		$msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+		// Send it to the server
+		$result = fwrite($fp, $msg, strlen($msg));
+
+		if (!$result)
+		    echo 'Message not delivered' . PHP_EOL;
+		else
+		    echo 'Message successfully delivered amar'.$message. PHP_EOL;
+
+		// Close the connection to the server
+		fclose($fp);
 
     }
 }
