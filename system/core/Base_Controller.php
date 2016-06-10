@@ -15,6 +15,8 @@ class Base_Controller extends CI_Controller{
 
     public function asynchronousResponseWithOperation($instance, $customOperation){
         $return_data = $customOperation($instance);
+            header('Content-Type: application/json');
+
         echo json_encode($return_data);
     }
 }
