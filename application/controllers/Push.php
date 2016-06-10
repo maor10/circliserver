@@ -72,7 +72,7 @@ class Push extends Base_Controller {
 		if (!$result)
 		    echo 'Message not delivered' . PHP_EOL;
 		else
-		    echo 'Message successfully delivered amar'.$message. PHP_EOL;
+		    echo 'Message successfully delivered amar '. $deviceToken .  PHP_EOL;
 
 		// Close the connection to the server
 		fclose($fp);
