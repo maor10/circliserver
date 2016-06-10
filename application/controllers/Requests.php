@@ -54,7 +54,7 @@ class Requests extends Base_Controller {
     
 
     public function update($id){
-        $this->solver_id = $this->input->put("solver_id");
+        $this->solver_id = $this->input->input_stream("solver_id");
 
         parent::asynchronousResponseWithOperation($this, function($instance) {
             return $this->requests_model->update($id, array("solver_id" => $this->solver_id));
