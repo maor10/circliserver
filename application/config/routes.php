@@ -61,7 +61,7 @@ $route['users/(:num)/groups']["get"] = "Users/get_groups/$1";
 $route['users/(:num)/requests']["get"] = "Users/get_requests/$1";
 
 $route['groups/(:num)/users']["get"] = "Groups/get_users/$1";
-$route['groups/create']["post"] = "Groups/create";
+$route['groups']["post"] = "Groups/create";
 $route['groups/(:num)/requests']["get"] = "Groups/get_requests_of_group/$1";
 
 
