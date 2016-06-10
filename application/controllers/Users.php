@@ -61,11 +61,12 @@ class Users extends Base_Controller {
     }
 
     public function update($id){
+        $this->user_id = $id;
         $this->updateArr = array(
             "device_token" => $this->input->input_stream("device_token")
             );
         parent::asynchronousResponseWithOperation($this, function($instance) {
-            return $this->users_model->update($id, $this->updateArr);
+            return $this->users_model->update($this->user_id, $this->updateArr);
         });   
     }
 
